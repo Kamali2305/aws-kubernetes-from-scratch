@@ -1,7 +1,7 @@
 # aws-kubernetes-from-scratch
 # Building a Kubernetes Cluster from Scratch on AWS
 
-Building a Kubernetes cluster from scratch on AWS using Amazon EC2, containerd, kubeadm, kubelet, and kubectl.
+Building a Kubernetes cluster from scratch on AWS using Amazon EC2, `containerd`, `kubeadm`, `kubelet`, and `kubectl`.
 
 ## Project Objective
 
@@ -24,11 +24,11 @@ The Kubernetes cluster is deployed on Amazon EC2 instances.
 
 - Connected to AWS using AWS CLI
 - Connected to Ubuntu EC2 instances using SSH
-- Installed containerd as the container runtime
-- Installed kubeadm, kubelet, and kubectl
+- Installed `containerd` as the container runtime
+- Installed `kubeadm`, `kubelet`, and `kubectl`
 - Enabled IP forwarding
 - Initialized the Kubernetes control plane
-- Configured kubectl
+- Configured `kubectl`
 - Installed Calico networking
 - Verified the Kubernetes control-plane node was in the Ready state
 
@@ -38,10 +38,10 @@ The Kubernetes cluster is deployed on Amazon EC2 instances.
 - Ubuntu Linux
 - AWS CLI
 - Kubernetes
-- kubeadm
-- kubelet
-- kubectl
-- containerd
+- `kubeadm`
+- `kubelet`
+- `kubectl`
+- `containerd`
 - Calico Networking
 
 ## Next Steps
