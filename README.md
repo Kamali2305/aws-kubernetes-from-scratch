@@ -1,18 +1,52 @@
 # aws-kubernetes-from-scratch
-Building a Kubernetes cluster from scratch on AWS using EC2, kubeadm, containerd, and kubectl.
+# Building a Kubernetes Cluster from Scratch on AWS
+
+Building a Kubernetes cluster from scratch on AWS using Amazon EC2, containerd, kubeadm, kubelet, and kubectl.
+
+---
+
 ## Project Objective
-This project focuses on building a Kubernetes cluster from scratch on AWS using Amazon EC2.
-The objective is to gain a strong understanding of Kubernetes architecture, including the control plane, worker nodes, networking, and cluster management, before deploying production workloads on Amazon EKS.
-## What I completed
-- Connected to AWS using CLI
+
+This project demonstrates the process of building a Kubernetes cluster from scratch on AWS using Amazon EC2.
+
+The objective is to gain a practical understanding of Kubernetes architecture, including the control plane, worker nodes, networking, container runtime, and cluster management before deploying production workloads on Amazon EKS.
+
+---
+
+## Architecture
+
+```
+                 AWS Cloud
+
+         +----------------------+
+         |  Control Plane (EC2) |
+         +----------+-----------+
+                    |
+             Kubernetes API
+                    |
+        -------------------------
+        |                       |
++---------------+      +---------------+
+| Worker Node   |      | Future Nodes  |
+|     (EC2)     |      |     (EC2)      |
++---------------+      +---------------+
+
+## What I Completed
+
+- Connected to AWS using AWS CLI
 - Connected to Ubuntu EC2 instances using SSH
-- Installed containerd
+- Installed containerd as the container runtime
 - Installed kubeadm, kubelet, and kubectl
+- Enabled IP forwarding
 - Initialized the Kubernetes control plane
 - Configured kubectl
 - Installed Calico networking
-- Verified the control-plane node was ready.
-## Technologies used
+- Verified the Kubernetes control-plane node was in the Ready state
+
+---
+
+## Technologies Used
+
 - AWS EC2
 - Ubuntu Linux
 - AWS CLI
@@ -21,12 +55,24 @@ The objective is to gain a strong understanding of Kubernetes architecture, incl
 - kubelet
 - kubectl
 - containerd
-- Calico
+- Calico Networking
+
+---
+
 ## Next Steps
-- Complete the worker node setup
+
+- Join the worker node to the cluster
 - Deploy an application
 - Create a Kubernetes Service
 - Learn ConfigMaps and Secrets
 - Configure Ingress
-- Move to Amazon EKS
-- Automate the environment using Terraform
+- Deploy the cluster on Amazon EKS
+- Automate the infrastructure using Terraform
+
+---
+
+## Project Status
+
+### In Progress
+
+This repository will be updated as additional Kubernetes components and Amazon EKS deployments are completed.
