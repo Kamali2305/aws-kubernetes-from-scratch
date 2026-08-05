@@ -3,19 +3,14 @@
 
 Building a Kubernetes cluster from scratch on AWS using Amazon EC2, containerd, kubeadm, kubelet, and kubectl.
 
----
-
 ## Project Objective
 
 This project demonstrates the process of building a Kubernetes cluster from scratch on AWS using Amazon EC2.
 
 The objective is to gain a practical understanding of Kubernetes architecture, including the control plane, worker nodes, networking, container runtime, and cluster management before deploying production workloads on Amazon EKS.
 
----
-
 ## Architecture
 
-```
                  AWS Cloud
 
          +----------------------+
@@ -43,8 +38,6 @@ The objective is to gain a practical understanding of Kubernetes architecture, i
 - Installed Calico networking
 - Verified the Kubernetes control-plane node was in the Ready state
 
----
-
 ## Technologies Used
 
 - AWS EC2
@@ -57,8 +50,6 @@ The objective is to gain a practical understanding of Kubernetes architecture, i
 - containerd
 - Calico Networking
 
----
-
 ## Next Steps
 
 - Join the worker node to the cluster
@@ -68,8 +59,6 @@ The objective is to gain a practical understanding of Kubernetes architecture, i
 - Configure Ingress
 - Deploy the cluster on Amazon EKS
 - Automate the infrastructure using Terraform
-
----
 
 ## Project Status
 
