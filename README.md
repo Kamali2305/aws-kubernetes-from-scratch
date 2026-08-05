@@ -11,20 +11,20 @@ The objective is to gain a practical understanding of Kubernetes architecture, i
 
 ## Architecture
 
-                 AWS Cloud
+               AWS Cloud
 
-         +----------------------+
-         |  Control Plane (EC2) |
-         +----------+-----------+
-                    |
-             Kubernetes API
-                    |
-        -------------------------
-        |                       |
-+---------------+      +---------------+
-| Worker Node   |      | Future Nodes  |
-|     (EC2)     |      |     (EC2)      |
-+---------------+      +---------------+
+         ┌──────────────────┐
+         │   EC2 Control    │
+         │      Plane       │
+         └────────┬─────────┘
+                  │
+          Kubernetes API
+                  │
+        ┌─────────┴─────────┐
+        │                   │
+┌───────────────┐   ┌───────────────┐
+│ Worker Node   │   │ Worker Node   │
+└───────────────┘   └───────────────┘
 
 ## What I Completed
 
