@@ -9,22 +9,16 @@ This project demonstrates the process of building a Kubernetes cluster from scra
 
 The objective is to gain a practical understanding of Kubernetes architecture, including the control plane, worker nodes, networking, container runtime, and cluster management before deploying production workloads on Amazon EKS.
 
-## Architecture
+## Architecture Overview
 
-               AWS Cloud
+The Kubernetes cluster is deployed on Amazon EC2 instances.
 
-         ┌──────────────────┐
-         │   EC2 Control    │
-         │      Plane       │
-         └────────┬─────────┘
-                  │
-          Kubernetes API
-                  │
-        ┌─────────┴─────────┐
-        │                   │
-┌───────────────┐   ┌───────────────┐
-│ Worker Node   │   │ Worker Node   │
-└───────────────┘   └───────────────┘
+- One EC2 instance acts as the **Kubernetes Control Plane**.
+- One EC2 instance acts as the **Worker Node**.
+- `containerd` is used as the container runtime.
+- `kubeadm` is used to initialize and manage the cluster.
+- `kubectl` is used to interact with the Kubernetes API.
+- Calico provides networking between cluster components.
 
 ## What I Completed
 
