@@ -180,7 +180,7 @@ kubectl get endpoints nginx-service
 
 The Service discovered both Nginx Pods through the matching label selector.
 
-![Service endpoints](screenshots/service-endpoints.png)
+![Service endpoints](screenshots/service-endpoint.png)
 
 ## Verify Pod Scheduling
 
@@ -233,7 +233,7 @@ kubectl apply -f service.yaml
 kubectl get svc
 ```
 
-![NodePort Service](screenshots/nodeport-service.png)
+![NodePort Service](screenshots/noderport-service.png)
 
 The application was tested from the control-plane node:
 
