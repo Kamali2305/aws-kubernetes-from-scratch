@@ -106,23 +106,116 @@ The password in this project is dummy data and must not be used in production.
 
 ## Cluster Setup
 
-The Kubernetes control plane was initialized using a setup script that installed the required Kubernetes components, configured the container runtime, ran `kubeadm init`, and installed Calico.
+The Kubernetes cluster was built in an AWS lab environment using two Amazon EC2 instances: one configured as the control-plane node and the other as the worker node.
 
-```bash
-wget -q https://gitlab.com/Christf24/container-security-course/-/raw/main/2-Kubernetes-Fundamentals/init-k8s.sh -O init-k8s.sh
+### Verify local tools
 
-chmod +x init-k8s.sh
+Before connecting to AWS, I verified that the required tools were installed.
 
-./init-k8s.sh
+```powershell
+git --version
+terraform version
+aws --version
 ```
 
-A worker join command was generated on the control plane:
+![Local tools installed](screenshots/local-tools-installed.png)
+
+---
+
+### Verify AWS connectivity
+
+I confirmed that the AWS CLI was authenticated and identified the running EC2 instances that would be used for the Kubernetes cluster.
+
+```powershell
+aws ec2 describe-instances `
+  --region us-east-1 `
+  --filters "Name=instance-state-name,Values=running" `
+  --query "Reservations[].Instances[].InstanceId" `
+  --output table
+```
+
+![AWS CLI connected](screenshots/aws-cli-connected.png)
+
+---
+
+### Prepare the control-plane node
+
+IPv4 forwarding was enabled before initializing the Kubernetes cluster.
+
+```bash
+sudo sysctl -w net.ipv4.ip_forward=1
+sudo sed -i '/^#net\.ipv4\.ip_forward=1/s/^#//' /etc/sysctl.conf
+sudo sysctl -p
+```
+
+---
+
+### Initialize the control plane
+
+The Kubernetes control plane was initialized using `kubeadm`.
+
+```bash
+sudo kubeadm init \
+  --pod-network-cidr=192.168.0.0/16 \
+  --cri-socket=unix:///run/containerd/containerd.sock
+```
+
+![Connected to control plane](screenshots/connected-control-plane.png)
+
+The initialization completed successfully and generated:
+
+- Commands to configure `kubectl`
+- The `kubeadm join` command required by the worker node
+
+---
+
+### Configure kubectl
+
+The kubeconfig file was copied to the Ubuntu user's home directory to allow cluster administration.
+
+```bash
+mkdir -p $HOME/.kube
+
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+```
+
+---
+
+### Verify the control-plane node
+
+The control-plane node was verified before adding the worker node.
+
+```bash
+kubectl get nodes
+```
+
+![Control plane ready](screenshots/control-plane-ready.png)
+
+---
+
+### Install Calico networking
+
+Calico was installed as the Kubernetes Container Network Interface (CNI) plugin.
+
+```bash
+kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.28.0/manifests/tigera-operator.yaml
+```
+
+![Installed Calico network](screenshots/installed-calico-network.png)
+
+---
+
+### Join the worker node
+
+A worker join command was generated from the control plane.
 
 ```bash
 kubeadm token create --print-join-command
 ```
 
-The generated command was then executed on the worker node:
+The generated command was executed on the worker node.
 
 ```bash
 sudo kubeadm join <control-plane-private-ip>:6443 \
@@ -130,20 +223,19 @@ sudo kubeadm join <control-plane-private-ip>:6443 \
   --discovery-token-ca-cert-hash sha256:<hash>
 ```
 
-Temporary tokens and credentials are intentionally not included in this repository.
+Temporary tokens and certificate hashes have been omitted from this repository.
 
-## Verify the Cluster
+---
+
+### Verify the cluster
+
+After the worker node joined successfully, the cluster was verified.
 
 ```bash
 kubectl get nodes
 ```
 
-Both nodes reached the `Ready` state:
-
-```text
-control-plane   Ready
-worker-node     Ready
-```
+Both the control-plane node and worker node reached the **Ready** state before deploying the application.
 
 ## Deploy the Kubernetes Resources
 
